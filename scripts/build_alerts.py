@@ -347,7 +347,7 @@ def main() -> int:
     enriched = enrich_listings(to_dict_list(listings), settings, conn)
     alerts, deals = build_outputs(enriched, top_k=args.top_k)
 
-    out_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "public"))
+    out_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     os.makedirs(out_dir, exist_ok=True)
 
     safe_write_json(os.path.join(out_dir, "alerts.json"), {"generated_at": now_iso(), "alerts": alerts})

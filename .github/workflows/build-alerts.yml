@@ -35,4 +35,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Auto-update deal alerts JSON"
-          file_pattern: public/top_deals.json public/alerts.json public/last_run.json
+          file_pattern: top_deals.json alerts.json last_run.json
