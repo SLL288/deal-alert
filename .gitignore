@@ -1,4 +1,5 @@
 .venv/
 cache/
-data/
+data/*
+!data/seeds.json
 __pycache__/

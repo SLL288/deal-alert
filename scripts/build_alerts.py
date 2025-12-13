@@ -65,6 +65,7 @@ class Listing:
     sqft: Optional[int] = None
     description: str = ""
     bc_assessed_value: Optional[int] = None
+    notes: str = ""
 
 
 def now_iso(ts: Optional[dt.datetime] = None) -> str:
@@ -163,6 +164,59 @@ def generate_demo_listings(settings: Dict, n: int = 200) -> List[Listing]:
     return out
 
 
+def load_seed_listings(seed_path: Path) -> List[Listing]:
+    if not seed_path.exists():
+        print(f"[seed] No seeds file at {seed_path}")
+        return []
+    with open(seed_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    items = data.get("items", []) if isinstance(data, dict) else []
+    out: List[Listing] = []
+    for item in items:
+        url = item.get("url") or ""
+        if not url:
+            continue
+        def _int(val):
+            try:
+                return int(val)
+            except (TypeError, ValueError):
+                return 0
+        price = _int(item.get("price"))
+        sqft = _int(item.get("sqft"))
+        assessed = item.get("bc_assessed_value")
+        assessed = _int(assessed) if assessed not in (None, "") else None
+        beds = item.get("beds")
+        baths = item.get("baths")
+        try:
+            beds = float(beds) if beds is not None else None
+        except (TypeError, ValueError):
+            beds = None
+        try:
+            baths = float(baths) if baths is not None else None
+        except (TypeError, ValueError):
+            baths = None
+
+        listing_id = stable_id("seed", url)
+        out.append(
+            Listing(
+                listing_id=listing_id,
+                source="seed",
+                url=url,
+                title=item.get("title") or "Seed listing",
+                address=item.get("address") or "",
+                city=item.get("city") or "",
+                price=price,
+                beds=beds,
+                baths=baths,
+                sqft=sqft or None,
+                description=item.get("notes") or "",
+                bc_assessed_value=assessed,
+                notes=item.get("notes") or "",
+            )
+        )
+    return out
+
+
 def keyword_hits(text: str, settings: Dict) -> List[str]:
     t = (text or "").lower()
     hits = []
@@ -182,9 +236,13 @@ def evaluate_listing(listing: Dict, dom_days: Optional[int], price_drop_ratio: f
 
     price = listing.get("price") or 0
     assessed = listing.get("bc_assessed_value") or listing.get("assessed")
+    missing_price = price <= 0
     ratio_thresh = float(signals_cfg.get("below_assessed_ratio", DEFAULT_SETTINGS["signals"]["below_assessed_ratio"]))
     is_below_assessed = False
-    if assessed:
+    if missing_price:
+        reasons.append("Missing price")
+        score -= 5
+    if assessed and price > 0:
         ratio = price / max(1, assessed)
         gap = max(0.0, 1 - ratio)
         if ratio <= ratio_thresh:
@@ -218,6 +276,7 @@ def evaluate_listing(listing: Dict, dom_days: Optional[int], price_drop_ratio: f
         "is_price_drop": is_price_drop,
         "is_long_dom": is_long_dom,
         "has_motivated_keywords": has_keywords,
+        "missing_price": missing_price,
     }
 
 
@@ -291,6 +350,7 @@ def build_outputs(listings: List[Dict], top_k: int = 50):
                 "is_relist": x.get("is_relist"),
                 "score": x.get("score"),
                 "reasons": x.get("reasons", []),
+                "missing_price": x.get("missing_price", False),
             }
         )
 
@@ -304,6 +364,7 @@ def build_outputs(listings: List[Dict], top_k: int = 50):
                 "url": x.get("url"),
                 "score": x.get("score"),
                 "reasons": x.get("reasons", []),
+                "missing_price": x.get("missing_price", False),
             }
         )
 
@@ -329,7 +390,7 @@ def to_dict_list(listings: List[Listing]) -> List[Dict]:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--mode", choices=["demo", "live"], default="demo")
+    ap.add_argument("--mode", choices=["demo", "live", "seed"], default="demo")
     ap.add_argument("--source", default="public_demo", help="Source for live mode (e.g., realtor_public_poc)")
     ap.add_argument("--top-k", type=int, default=50)
     args = ap.parse_args()
@@ -339,6 +400,12 @@ def main() -> int:
 
     if args.mode == "demo":
         listings = generate_demo_listings(settings)
+    elif args.mode == "seed":
+        seed_path = BASE_DIR / "data" / "seeds.json"
+        listings = load_seed_listings(seed_path)
+        if not listings:
+            alt_path = BASE_DIR / "seeds_public.json"
+            listings = load_seed_listings(alt_path)
     else:
         listings = fetch_live(args.source, settings)
         if args.source == "public_demo" and not listings:

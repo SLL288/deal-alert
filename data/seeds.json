@@ -1,0 +1,17 @@
+{
+  "items": [
+    {
+      "url": "https://www.realtor.ca/real-estate/29123637/15210-82-avenue-surrey",
+      "title": "15210 82 Avenue, Surrey, BC",
+      "city": "Surrey",
+      "address": "15210 82 Avenue",
+      "price": 0,
+      "beds": null,
+      "baths": null,
+      "sqft": null,
+      "notes": "Paste key highlights here (optional)",
+      "bc_assessed_value": null,
+      "tags": ["seed"]
+    }
+  ]
+}

@@ -15,7 +15,7 @@ This MVP has **two parts**:
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-python scripts/build_alerts.py --mode demo
+python scripts/build_alerts.py --mode demo  # or --mode seed to use data/seeds.json
 python -m http.server 8000
 # open http://localhost:8000
 ```
@@ -46,3 +46,4 @@ to `--mode live` and use the safe fetcher in `scripts/fetch_public.py` or a comp
 - Check Actions runs in GitHub → Actions → `Build deal alerts JSON`; confirm it succeeds and JSON files change (see “Last run” timestamp on the site).
 - Share the Pages URL (English: `/index.html`, Chinese: `/index_zh.html`, Subscribe: `/subscribe.html`).
 - Remember: current data is demo-only (no live crawling, no database). Switch the workflow command when ready for real sources.
+- Seed mode: edit `data/seeds.json` (or use `admin_seeds.html` to copy JSON) and run `python scripts/build_alerts.py --mode seed`.

@@ -260,12 +260,14 @@ function renderDeals(list){
     const assessed = d.bc_assessed_value ? badge(`BC评估价 ${fmtMoney(d.bc_assessed_value)}`) : "";
     const relist = d.is_relist ? badge("重新挂牌", "negative") : "";
     const below = d.is_below_assessed ? badge("低于评估", "positive") : "";
+    const needsInput = d.price <= 0 ? badge("待填写", "negative") : "";
     const bb = [];
     if(d.beds) bb.push(`${d.beds} 室`);
     if(d.baths) bb.push(`${d.baths} 卫`);
     if(d.sqft) bb.push(`${d.sqft.toLocaleString()} 平方尺`);
 
     const reasons = (d.reasons || []).map(r=>`<li>${r}</li>`).join("");
+    const priceLabel = d.price > 0 ? fmtMoney(d.price) : "价格：待填写";
 
     return `
       <article class="card">
@@ -274,7 +276,7 @@ function renderDeals(list){
             <div class="title">${d.title}</div>
             <div class="address">${d.address} · ${d.city}</div>
           </div>
-          <div class="price">${fmtMoney(d.price)}</div>
+          <div class="price">${priceLabel}</div>
         </div>
         <div class="badge-row">
           ${badge(`机会分 ${d.score ?? 0}`, "score")}
@@ -284,6 +286,7 @@ function renderDeals(list){
           ${drops}
           ${relist}
           ${below}
+          ${needsInput}
         </div>
         <div class="reasons">
           <strong>触发原因</strong>

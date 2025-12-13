@@ -260,12 +260,14 @@ function renderDeals(list){
     const assessed = d.bc_assessed_value ? badge(`Assessed ${fmtMoney(d.bc_assessed_value)}`) : "";
     const relist = d.is_relist ? badge("Relist", "negative") : "";
     const below = d.is_below_assessed ? badge("Below assessed", "positive") : "";
+    const needsInput = d.price <= 0 ? badge("Needs input", "negative") : "";
     const bb = [];
     if(d.beds) bb.push(`${d.beds} bd`);
     if(d.baths) bb.push(`${d.baths} ba`);
     if(d.sqft) bb.push(`${d.sqft.toLocaleString()} sqft`);
 
     const reasons = (d.reasons || []).map(r=>`<li>${r}</li>`).join("");
+    const priceLabel = d.price > 0 ? fmtMoney(d.price) : "Price: (fill in)";
 
     return `
       <article class="card">
@@ -274,7 +276,7 @@ function renderDeals(list){
             <div class="title">${d.title}</div>
             <div class="address">${d.address} · ${d.city}</div>
           </div>
-          <div class="price">${fmtMoney(d.price)}</div>
+          <div class="price">${priceLabel}</div>
         </div>
         <div class="badge-row">
           ${badge(`Score ${d.score ?? 0}`, "score")}
@@ -284,6 +286,7 @@ function renderDeals(list){
           ${drops}
           ${relist}
           ${below}
+          ${needsInput}
         </div>
         <div class="reasons">
           <strong>Reasons</strong>
