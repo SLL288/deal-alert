@@ -1,125 +1,17 @@
 {
-  "generated_at": "2025-12-13T22:40:06Z",
+  "generated_at": "2025-12-13T23:23:17Z",
   "alerts": [
     {
-      "listing_id": "e9d8db426223c41c",
-      "title": "1 bd • Detached in Vancouver",
-      "city": "Vancouver",
-      "price": 1237780,
-      "url": "https://example.com/listing/90",
-      "score": 66.6,
+      "listing_id": "21ec3c8f42d25a4a",
+      "title": "15210 82 Avenue, Surrey, BC",
+      "city": "Surrey",
+      "price": 0,
+      "url": "https://www.realtor.ca/real-estate/29123637/15210-82-avenue-surrey",
+      "score": -5.0,
       "reasons": [
-        "低于评估价 13%",
-        "包含关键词: priced to sell, motivated, 急售"
-      ]
-    },
-    {
-      "listing_id": "6f1953263beb7ea2",
-      "title": "2 bd • Townhouse in Richmond",
-      "city": "Richmond",
-      "price": 939474,
-      "url": "https://example.com/listing/125",
-      "score": 66.27,
-      "reasons": [
-        "低于评估价 13%",
-        "包含关键词: priced to sell, motivated, must sell"
-      ]
-    },
-    {
-      "listing_id": "be8c9888f37d26e1",
-      "title": "5 bd • Detached in Vancouver",
-      "city": "Vancouver",
-      "price": 965588,
-      "url": "https://example.com/listing/6",
-      "score": 62.54,
-      "reasons": [
-        "低于评估价 11%",
-        "包含关键词: priced to sell, motivated, must sell"
-      ]
-    },
-    {
-      "listing_id": "80f2a3cb5e349aef",
-      "title": "2 bd • Condo in Vancouver",
-      "city": "Vancouver",
-      "price": 784016,
-      "url": "https://example.com/listing/0",
-      "score": 59.6,
-      "reasons": [
-        "低于评估价 13%",
-        "包含关键词: must sell, bring your offer"
-      ]
-    },
-    {
-      "listing_id": "bca4d2f71387d208",
-      "title": "2 bd • Townhouse in Vancouver",
-      "city": "Vancouver",
-      "price": 916296,
-      "url": "https://example.com/listing/165",
-      "score": 58.97,
-      "reasons": [
-        "低于评估价 12%",
-        "包含关键词: must sell, bring your offer"
-      ]
-    },
-    {
-      "listing_id": "c088cb7cdd4825e4",
-      "title": "4 bd • Detached in Burnaby",
-      "city": "Burnaby",
-      "price": 904503,
-      "url": "https://example.com/listing/10",
-      "score": 57.87,
-      "reasons": [
-        "低于评估价 12%",
-        "包含关键词: 急售, 诚意卖"
-      ]
-    },
-    {
-      "listing_id": "389b35b26bae9fb2",
-      "title": "5 bd • Townhouse in Richmond",
-      "city": "Richmond",
-      "price": 804491,
-      "url": "https://example.com/listing/65",
-      "score": 57.45,
-      "reasons": [
-        "低于评估价 12%",
-        "包含关键词: 急售, 诚意卖"
-      ]
-    },
-    {
-      "listing_id": "7bc748ad88af4f86",
-      "title": "2 bd • 1/2 Duplex in Burnaby",
-      "city": "Burnaby",
-      "price": 759627,
-      "url": "https://example.com/listing/43",
-      "score": 57.0,
-      "reasons": [
-        "低于评估价 11%",
-        "包含关键词: priced to sell, motivated"
-      ]
-    },
-    {
-      "listing_id": "ddcf54169c51e661",
-      "title": "3 bd • Detached in Richmond",
-      "city": "Richmond",
-      "price": 1139089,
-      "url": "https://example.com/listing/194",
-      "score": 56.89,
-      "reasons": [
-        "低于评估价 11%",
-        "包含关键词: priced to sell, motivated"
-      ]
-    },
-    {
-      "listing_id": "8888ebba01c7343b",
-      "title": "2 bd • Detached in Burnaby",
-      "city": "Burnaby",
-      "price": 940964,
-      "url": "https://example.com/listing/46",
-      "score": 56.76,
-      "reasons": [
-        "低于评估价 9%",
-        "包含关键词: must sell, bring your offer, 急售"
-      ]
+        "Missing price"
+      ],
+      "missing_price": true
     }
   ]
 }
