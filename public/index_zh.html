@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>低价房源雷达 | 华人版</title>
+  <meta name="description" content="每日扫描公开房源，筛选降价、低于评估、挂牌久、急售关键词机会。" />
+  <meta property="og:title" content="低价房源雷达 | 华人版" />
+  <meta property="og:description" content="每日扫描公开房源：降价、低于评估、挂牌久、重新挂牌、急售关键词。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="./assets/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="低价房源雷达" />
+  <meta name="twitter:description" content="更早发现低价房源机会。" />
+  <meta name="twitter:image" content="./assets/og.png" />
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">低价房源雷达</div>
+      <nav class="nav-links">
+        <a class="nav-link" href="#deals">房源</a>
+        <a class="nav-link disabled" href="#" aria-disabled="true" title="地图即将上线">地图</a>
+        <a class="nav-link" href="#how">如何运作</a>
+        <a class="nav-link" href="./index.html">EN</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>更早发现低价房源机会。</h1>
+      <p>每日扫描公开房源：降价、低于评估、挂牌久、重新挂牌、急售关键词。</p>
+      <div class="cta-row">
+        <a class="btn" href="./subscribe.html">订阅每日提醒（内测）</a>
+        <a class="btn secondary" href="#deals">查看今日机会</a>
+      </div>
+    </section>
+
+    <section class="strip" id="stats">
+      <div class="stat">
+        <div class="stat-label">最近运行</div>
+        <div class="stat-value" id="statRun">—</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">扫描房源数</div>
+        <div class="stat-value" id="statCount">—</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">加载的精选房源</div>
+        <div class="stat-value" id="statDeals">—</div>
+      </div>
+    </section>
+
+    <section class="section" id="filtersSection">
+      <div class="filters">
+        <div class="field">
+          <label for="cityFilter">城市</label>
+          <select id="cityFilter">
+            <option value="">全部城市</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="searchInput">搜索</label>
+          <input id="searchInput" type="text" placeholder="地址或标题…" />
+        </div>
+        <div class="field">
+          <label for="sortSelect">排序</label>
+          <select id="sortSelect">
+            <option value="score">机会分</option>
+            <option value="price_asc">价格升序</option>
+            <option value="price_desc">价格降序</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>快速筛选</label>
+          <div class="chips" id="toggleChips"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="deals">
+      <div class="card empty" id="loading">正在加载房源…</div>
+      <div class="card error" id="error" style="display:none;">数据加载失败。</div>
+      <div class="cards" id="dealGrid" style="display:none;"></div>
+      <div class="show-more" id="showMore" style="display:none;">
+        <button id="showMoreBtn">显示更多</button>
+      </div>
+    </section>
+
+    <section class="section" id="how">
+      <div class="how">
+        <h3 style="margin:0 0 6px;">如何运作</h3>
+        <div class="how-steps">
+          <div class="step">
+            <div aria-hidden="true">
+              <svg width="26" height="26" fill="none" viewBox="0 0 24 24"><path stroke="#6de0ff" stroke-width="1.4" d="M4 5h16M4 12h16M4 19h10"/><circle cx="18" cy="19" r="1.5" fill="#6de0ff"/></svg>
+            </div>
+            <h4>每日收集</h4>
+            <p>每天抓取公开房源和基础元数据。</p>
+          </div>
+          <div class="step">
+            <div aria-hidden="true">
+              <svg width="26" height="26" fill="none" viewBox="0 0 24 24"><path stroke="#6de0ff" stroke-width="1.4" d="M12 3v4m0 10v4m9-9h-4M7 12H3"/><circle cx="12" cy="12" r="4.5" stroke="#6de0ff" stroke-width="1.4"/></svg>
+            </div>
+            <h4>跟踪变化</h4>
+            <p>SQLite 历史记录 DOM、价格变动和重新挂牌信号。</p>
+          </div>
+          <div class="step">
+            <div aria-hidden="true">
+              <svg width="26" height="26" fill="none" viewBox="0 0 24 24"><path stroke="#6de0ff" stroke-width="1.4" d="M5 19v-4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/><circle cx="12" cy="9" r="3.5" stroke="#6de0ff" stroke-width="1.4"/></svg>
+            </div>
+            <h4>打分提醒</h4>
+            <p>根据降价、评估价差、挂牌天数、重新挂牌、关键词进行评分。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>本平台不提供房地产经纪服务，仅供信息参考。请以原始来源为准。</div>
+      <div>联系邮箱：<a href="mailto:hello@example.com">hello@example.com</a></div>
+    </footer>
+  </main>
+
+<script>
+const state = {
+  deals: [],
+  lastRun: null,
+  filters: { city: "", q: "", sort: "score", toggles: new Set() },
+  showCount: 30,
+  toggleMeta: []
+};
+
+const fmtMoney = (n) => new Intl.NumberFormat("zh-CN", { style:"currency", currency:"CAD", maximumFractionDigits:0 }).format(n);
+const fmtPercent = (v) => `${(v * 100).toFixed(0)}%`;
+
+async function loadJSON(path){
+  const ts = Date.now();
+  const sep = path.includes("?") ? "&" : "?";
+  const r = await fetch(`${path}${sep}ts=${ts}`, { cache: "no-store" });
+  if(!r.ok) throw new Error(`Failed ${path}`);
+  return await r.json();
+}
+
+function normalizeDeal(d){
+  const dom = Number.isFinite(d.dom_days) ? d.dom_days : (d.dom_days != null && !isNaN(Number(d.dom_days)) ? Number(d.dom_days) : null);
+  const dropRaw = d.price_drop_30d_ratio ?? d.price_drop_ratio ?? null;
+  const drop = dropRaw != null && !isNaN(Number(dropRaw)) && Number(dropRaw) > 0 ? Number(dropRaw) : null;
+  const below = typeof d.is_below_assessed === "boolean" ? d.is_below_assessed : null;
+  const relist = typeof d.is_relist === "boolean" ? d.is_relist : null;
+  return {
+    listing_id: d.listing_id,
+    title: d.title || "房源",
+    address: d.address || "",
+    city: d.city || "",
+    price: d.price || 0,
+    beds: d.beds,
+    baths: d.baths,
+    sqft: d.sqft,
+    bc_assessed_value: d.bc_assessed_value || d.assessed,
+    dom_days: dom,
+    price_drop_30d_ratio: drop,
+    is_relist: relist,
+    is_below_assessed: below,
+    reasons: d.reasons || [],
+    url: d.url || "#",
+    score: d.score ?? 0,
+  };
+}
+
+function buildToggleMeta(deals){
+  const base = [
+    { id:"below", label:"低于评估", field:"is_below_assessed", predicate:(d)=>d.is_below_assessed === true },
+    { id:"drop", label:"降价", field:"price_drop_30d_ratio", predicate:(d)=>typeof d.price_drop_30d_ratio === "number" && d.price_drop_30d_ratio > 0 },
+    { id:"dom", label:"挂牌久", field:"dom_days", predicate:(d)=>typeof d.dom_days === "number" && d.dom_days > 0 },
+    { id:"relist", label:"重新挂牌", field:"is_relist", predicate:(d)=>d.is_relist === true },
+  ];
+  return base.filter(t => deals.some(t.predicate));
+}
+
+function applyFilters(){
+  const { city, q, sort, toggles } = state.filters;
+  let items = state.deals.filter(d => {
+    const matchCity = !city || d.city === city;
+    const text = `${d.title} ${d.address} ${d.city}`.toLowerCase();
+    const matchQ = !q || text.includes(q.toLowerCase());
+    const toggleOk = Array.from(toggles).every(t => {
+      if(t === "below") return d.is_below_assessed === true;
+      if(t === "drop") return (d.price_drop_30d_ratio || 0) > 0;
+      if(t === "dom") return typeof d.dom_days === "number" && d.dom_days > 0;
+      if(t === "relist") return d.is_relist === true;
+      return true;
+    });
+    return matchCity && matchQ && toggleOk;
+  });
+
+  if(sort === "price_asc") items.sort((a,b)=>a.price-b.price);
+  else if(sort === "price_desc") items.sort((a,b)=>b.price-a.price);
+  else items.sort((a,b)=> (b.score || 0) - (a.score || 0));
+
+  renderDeals(items);
+}
+
+function renderFilters(){
+  const cities = [...new Set(state.deals.map(d => d.city).filter(Boolean))].sort();
+  const citySel = document.getElementById("cityFilter");
+  citySel.innerHTML = `<option value="">全部城市</option>` + cities.map(c=>`<option value="${c}">${c}</option>`).join("");
+  citySel.onchange = () => { state.filters.city = citySel.value; applyFilters(); };
+
+  const search = document.getElementById("searchInput");
+  search.oninput = () => { state.filters.q = search.value; applyFilters(); };
+
+  const sortSel = document.getElementById("sortSelect");
+  sortSel.onchange = () => { state.filters.sort = sortSel.value; applyFilters(); };
+
+  const toggleWrap = document.getElementById("toggleChips");
+  toggleWrap.innerHTML = "";
+  state.toggleMeta.forEach(t => {
+    const btn = document.createElement("button");
+    btn.className = "chip";
+    btn.type = "button";
+    btn.textContent = t.label;
+    btn.onclick = () => {
+      if(state.filters.toggles.has(t.id)) state.filters.toggles.delete(t.id);
+      else state.filters.toggles.add(t.id);
+      btn.classList.toggle("active");
+      applyFilters();
+    };
+    toggleWrap.appendChild(btn);
+  });
+}
+
+function badge(text, extraClass=""){
+  return `<span class="badge ${extraClass}">${text}</span>`;
+}
+
+function renderDeals(list){
+  const grid = document.getElementById("dealGrid");
+  const showMore = document.getElementById("showMore");
+  const loading = document.getElementById("loading");
+  const error = document.getElementById("error");
+  loading.style.display = "none";
+  error.style.display = "none";
+  grid.style.display = "grid";
+
+  const total = list.length;
+  const slice = list.slice(0, state.showCount);
+  if(total === 0){
+    grid.innerHTML = `<div class="card empty">没有符合条件的房源。</div>`;
+    showMore.style.display = "none";
+    document.getElementById("statDeals").textContent = "0";
+    return;
+  }
+
+  grid.innerHTML = slice.map(d => {
+    const drops = d.price_drop_30d_ratio != null ? badge(`近30天降幅 ${fmtPercent(d.price_drop_30d_ratio)}`, "negative") : "";
+    const dom = d.dom_days != null ? badge(`挂牌天数 ${d.dom_days}`) : "";
+    const assessed = d.bc_assessed_value ? badge(`BC评估价 ${fmtMoney(d.bc_assessed_value)}`) : "";
+    const relist = d.is_relist ? badge("重新挂牌", "negative") : "";
+    const below = d.is_below_assessed ? badge("低于评估", "positive") : "";
+    const bb = [];
+    if(d.beds) bb.push(`${d.beds} 室`);
+    if(d.baths) bb.push(`${d.baths} 卫`);
+    if(d.sqft) bb.push(`${d.sqft.toLocaleString()} 平方尺`);
+
+    const reasons = (d.reasons || []).map(r=>`<li>${r}</li>`).join("");
+
+    return `
+      <article class="card">
+        <div class="card-top">
+          <div>
+            <div class="title">${d.title}</div>
+            <div class="address">${d.address} · ${d.city}</div>
+          </div>
+          <div class="price">${fmtMoney(d.price)}</div>
+        </div>
+        <div class="badge-row">
+          ${badge(`机会分 ${d.score ?? 0}`, "score")}
+          ${bb.length ? badge(bb.join(" · ")) : ""}
+          ${assessed}
+          ${dom}
+          ${drops}
+          ${relist}
+          ${below}
+        </div>
+        <div class="reasons">
+          <strong>触发原因</strong>
+          ${reasons ? `<ul>${reasons}</ul>` : `<div class="muted">暂无原因</div>`}
+        </div>
+        <div class="card-actions">
+          <a class="link" href="${d.url}" target="_blank" rel="noreferrer">打开原始链接</a>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  document.getElementById("statDeals").textContent = total;
+  showMore.style.display = total > state.showCount ? "flex" : "none";
+}
+
+async function main(){
+  try{
+    const [lastRun, top] = await Promise.all([
+      loadJSON("./last_run.json").catch(()=>null),
+      loadJSON("./top_deals.json")
+    ]);
+    state.lastRun = lastRun;
+    const deals = (top && top.deals) || [];
+    state.deals = deals.map(normalizeDeal);
+    state.toggleMeta = buildToggleMeta(state.deals);
+
+    document.getElementById("statRun").textContent = lastRun?.generated_at || "—";
+    document.getElementById("statCount").textContent = lastRun?.listing_count ?? "—";
+
+    renderFilters();
+    renderDeals(state.deals);
+  } catch(err){
+    document.getElementById("loading").style.display = "none";
+    const el = document.getElementById("error");
+    el.textContent = `数据加载失败: ${err.message}`;
+    el.style.display = "block";
+  }
+}
+
+document.getElementById("showMoreBtn").onclick = () => { state.showCount += 30; applyFilters(); };
+main();
+</script>
+</body>
+</html>

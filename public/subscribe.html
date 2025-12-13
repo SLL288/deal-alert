@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Subscribe | Deal Radar</title>
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <h1>Subscribe to Deal Radar (beta)</h1>
+      <p>Send us your info and preferred cities. We’ll add you to the demo alert list.</p>
+      <a class="btn secondary" href="./index.html">← Back to home</a>
+    </section>
+
+    <section class="section">
+      <div class="how">
+        <form id="subForm" class="section" style="margin:0;">
+          <div class="filters" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" type="text" required placeholder="Your name" />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" type="email" required placeholder="you@example.com" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Preferred cities</label>
+            <div class="chips" id="cities">
+              <label><input type="checkbox" value="Vancouver" /> Vancouver</label>
+              <label><input type="checkbox" value="Burnaby" /> Burnaby</label>
+              <label><input type="checkbox" value="Richmond" /> Richmond</label>
+              <label><input type="checkbox" value="Surrey" /> Surrey</label>
+              <label><input type="checkbox" value="Coquitlam" /> Coquitlam</label>
+            </div>
+          </div>
+
+          <button class="btn" type="submit" style="width:fit-content;">Send via email</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="how">
+        <h3 style="margin:0 0 8px;">WeChat / copy-paste template</h3>
+        <p class="muted">Copy this message and send via WeChat:</p>
+        <div class="field">
+          <textarea id="wechatText" rows="4" style="width:100%; padding:10px; border-radius:12px; background:#0c1423; color:var(--text); border:1px solid var(--line);">想加入低价房源提醒：
+姓名：
+邮箱：
+关注城市：Vancouver / Burnaby / Richmond / Surrey / Coquitlam</textarea>
+        </div>
+        <div class="cta-row">
+          <button class="btn secondary" type="button" id="copyWechat">Copy message</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<script>
+const mailto = "mailto:hello@example.com";
+
+document.getElementById("subForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const cities = Array.from(document.querySelectorAll("#cities input:checked")).map(i=>i.value);
+
+  const subject = encodeURIComponent("Deal Alerts Beta");
+  const body = encodeURIComponent(
+    `Name: ${name}\nEmail: ${email}\nPreferred cities: ${cities.join(", ") || "Any"}`
+  );
+  window.location.href = `${mailto}?subject=${subject}&body=${body}`;
+});
+
+document.getElementById("copyWechat").addEventListener("click", () => {
+  const text = document.getElementById("wechatText");
+  text.select();
+  document.execCommand("copy");
+});
+</script>
+</body>
+</html>

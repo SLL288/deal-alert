@@ -1,0 +1,17 @@
+{
+  "target_cities": ["Vancouver", "Burnaby", "Richmond"],
+  "run_frequency": "daily",
+  "limits": {
+    "max_search_pages": 2,
+    "max_detail_pages": 40,
+    "min_delay_seconds": 2.5,
+    "max_delay_seconds": 5.0
+  },
+  "signals": {
+    "below_assessed_ratio": 0.95,
+    "price_drop_ratio_30d": 0.05,
+    "dom_days": 45,
+    "motivated_keywords_en": ["priced to sell", "motivated", "must sell", "bring your offer"],
+    "motivated_keywords_zh": ["急售", "诚意卖", "降价", "低于评估"]
+  }
+}
